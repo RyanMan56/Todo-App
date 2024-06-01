@@ -8,7 +8,7 @@ backend:
 
 .PHONY: build
 build:
-	cd backend && GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -tags lambda.norpc -o bootstrap main.go
+	cd backend && GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -tags lambda.norpc -o build/bootstrap src/main.go
 
 .PHONY: deploy
 deploy:
@@ -16,4 +16,4 @@ deploy:
 
 .PHONY: watch
 watch:
-	cd infra && yarn watch
+	cd infra && npx concurrently "yarn cdk-watch" "yarn go-watch"
